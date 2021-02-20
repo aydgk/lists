@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 import time
 
-MAX_WAIT = 10
+MAX_WAIT = 5
 
 class NewVisitorTest(LiveServerTestCase):
 
@@ -126,7 +126,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # She notices that her list has a unique URL
         edith_list_url = self.browser.current_url
-        self.assertRegex(edith_list_url, '/list/.+')
+        self.assertRegex(edith_list_url, '/lists/.+')
 
         # Now a new user, Francis, comes along to the site
 
@@ -155,8 +155,8 @@ class NewVisitorTest(LiveServerTestCase):
 
         # Francis gets his own unique URL
         francis_list_url = self.browser.current_url
-        self.assertRegex(francis_list_url, '/list/.+')
-        self.assertNotEqual(rancis_list_url, edith_list_url)
+        self.assertRegex(francis_list_url, '/lists/.+')
+        self.assertNotEqual(francis_list_url, edith_list_url)
 
         # Again, there is no trace of Edith's list
         page_text = self.browser.self_element_by_tag_name('body').text
