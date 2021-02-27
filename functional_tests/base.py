@@ -4,6 +4,8 @@ from selenium.common.exceptions import WebDriverException
 import time
 import os
 
+from .server_tools import reset_database
+
 MAX_WAIT = 5
 
 class FunctionalTest(StaticLiveServerTestCase):
@@ -14,9 +16,10 @@ class FunctionalTest(StaticLiveServerTestCase):
         self.browser = webdriver.Chrome()
             # executable_path='/usr/local/bin/chromedriver',
             # chrome_options=options)
-        staging_server = os.environ.get('STAGING_SERVER')
-        if staging_server:
-            self.live_server_url = 'http://' + staging_server
+        self.staging_server = os.environ.get('STAGING_SERVER')
+        if self.staging_server:
+            self.live_server_url = 'http://' + self.staging_server
+            reset_database(self.staging_server)
 
     def tearDown(self):
         self.browser.close()
